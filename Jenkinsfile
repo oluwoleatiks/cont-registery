@@ -22,7 +22,7 @@ pipeline {
         }
       }
       
-    stage ('Build Image') {
+    stage ('Build-Image to DockerHub') {
       steps {
         withDockerRegistry([credentialsId: 'docker-hub', url: ""]) {
           sh 'docker build -t ${REGISTRY_TAG} .'
