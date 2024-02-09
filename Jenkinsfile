@@ -6,7 +6,9 @@ pipeline {
     ORGANIZATION_NAME = "oluwoleatiks"
     DOCKERHUB_USERNAME = "atcool"
     REGISTRY_TAG      = "${DOCKERHUB_USERNAME}/${ORGANIZATION_NAME}-${SERVICE_NAME}:${BUILD_ID}"
-
+    REPO_TAG          = "public.ecr.aws/p5j6n6c7"
+    APP_NAME          = "demoapp"
+    VERSION           = "${BUILD_ID}"
   }
 
   stages {
@@ -24,6 +26,17 @@ pipeline {
           sh 'docker push ${REGISTRY_TAG}'
         }
       }
+    }
+
+    stage ('Publish to Public ECR') {
+      steps {
+         withEnv(["AWS_ACCESS_KEY_ID=${env.AWS_ACCESS_KEY_ID}", "AWS_SECRET_ACCESS_KEY=${env.AWS_SECRET_ACCESS_KEY}", "AWS_DEFAULT_REGION=${env.AWS_DEFAULT_REGION}"]) {
+          sh 'docker login -u AWS -p $(aws ecr-public get-login-password --region us-east-1) ${REPO_TAG}'
+          sh 'docker build -t ${APP_NAME}:${VERSION} .'
+          sh 'docker tag ${APP_NAME}:${VERSION} ${REPO_TAG}/${APP_NAME}:${VERSION}'
+          sh 'docker push ${REPO_TAG}/${APP_NAME}:${VERSION}'
+         }
+       }
     }
     stage ('Delete Images') {
       steps {
