@@ -7,7 +7,7 @@ pipeline {
     DOCKERHUB_USERNAME = "atcool"
     REGISTRY_TAG      = "${DOCKERHUB_USERNAME}/${ORGANIZATION_NAME}-${SERVICE_NAME}:${BUILD_ID}"
     REPO_TAG          = "public.ecr.aws/p5j6n6c7"
-    APP_NAME          = "demoapp"
+    APP_NAME          = "coolapp"
     VERSION           = "${BUILD_ID}"
   }
 
