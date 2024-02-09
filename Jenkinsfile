@@ -5,7 +5,7 @@ pipeline {
     SERVICE_NAME = "cont-registery"
     ORGANIZATION_NAME = "oluwoleatiks"
     DOCKERHUB_USERNAME = "oluwoleatiks"
-    REGISTRY_TAG      = "${DOCKERHUB_USERNAME}/$ORGANIZATION_NAME}-${SERVICE_NAME}:${BUILD_ID}"
+    REGISTRY_TAG      = "${DOCKERHUB_USERNAME}/${ORGANIZATION_NAME}-${SERVICE_NAME}:${BUILD_ID}"
 
   }
 
